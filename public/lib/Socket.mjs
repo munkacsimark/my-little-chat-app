@@ -1,6 +1,6 @@
 class Socket {
   constructor(socket) {
-    if (!socket) throw new ReferenceError('socket is required.');
+    if (!socket) throw new ReferenceError('io is required.');
     this.socket = socket;
     this.listenForMessages();
   }
