@@ -1,19 +1,15 @@
 {
   "name": "chat-app",
   "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
   "scripts": {
-    "start:server": "nodemon server",
-    "start:client": "nodemon client"
+    "server": "nodemon server",
+    "client": "nodemon client"
   },
-  "author": "",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^1.19.1"
   },
   "dependencies": {
-    "express": "^4.17.1",
     "socket.io": "^2.2.0"
   }
 }
