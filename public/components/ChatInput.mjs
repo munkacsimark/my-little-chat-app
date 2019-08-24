@@ -18,39 +18,26 @@ template.innerHTML = `
 `;
 
 class ChatInput extends HTMLElement {
-
-  #shadowRoot;
-
   constructor() {
     super();
-    this.#shadowRoot = this.attachShadow({mode: 'open'});
-    this.#shadowRoot.appendChild(template.content.cloneNode(true));
+    this.shadow = this.attachShadow({mode: 'open'});
+    this.shadow.appendChild(template.content.cloneNode(true));
 
     this.setPlaceholder();
     this.handleSubmit();
+    this.shadow.querySelector('input').focus();
   }
 
   setPlaceholder() {
     if (this.getAttribute('placeholder'))
-      this.#shadowRoot.querySelector('input').placeholder = this.getAttribute('placeholder');
+      this.shadow.querySelector('input').placeholder = this.getAttribute('placeholder');
   }
 
   handleSubmit() {
-    this.#shadowRoot.querySelector('input').addEventListener('keyup', event => {
-      if (event.code === 'Enter') {
-        this.dispatchEvent(new CustomEvent('inputEnter'));
-      } else {
-        this.setAttribute('data-value', this.#shadowRoot.querySelector('input').value); 
-      }
+    this.shadow.querySelector('input').addEventListener('keyup', event => {
+      if (event.code !== 'Enter') return;
+      this.dispatchEvent(new CustomEvent('inputEnter'));
     })
-  }
-
-  attributeChangedCallback(name, oldValue, newValue) {
-    this.#shadowRoot.querySelector('input').value = newValue;
-  }
-
-  static get observedAttributes() {
-    return ['data-value'];
   }
 }
 

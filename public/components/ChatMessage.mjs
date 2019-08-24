@@ -49,13 +49,10 @@ template.innerHTML = `
 `;
 
 class ChatMessage extends HTMLElement {
-
-  #shadowRoot;
-
   constructor() {
     super();
-    this.#shadowRoot = this.attachShadow({mode: 'open'});
-    this.#shadowRoot.appendChild(template.content.cloneNode(true));
+    this.shadow = this.attachShadow({mode: 'open'});
+    this.shadow.appendChild(template.content.cloneNode(true));
   }
 
   connectedCallback() {
@@ -63,11 +60,11 @@ class ChatMessage extends HTMLElement {
   }
 
   getData() {
-    const messageElement = this.#shadowRoot.querySelector('.row');
+    const messageElement = this.shadow.querySelector('.row');
     if (this.getAttribute('own-message')) messageElement.classList.add('own');
     if (this.getAttribute('server-message')) messageElement.classList.add('server');
-    this.#shadowRoot.querySelector('.user').innerText = this.getAttribute('user');
-    this.#shadowRoot.querySelector('.text').innerText = this.getAttribute('text');
+    this.shadow.querySelector('.user').innerText = this.getAttribute('user');
+    this.shadow.querySelector('.text').innerText = this.getAttribute('text');
   }
 }
 

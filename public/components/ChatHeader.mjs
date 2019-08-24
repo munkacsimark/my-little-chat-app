@@ -25,13 +25,10 @@ template.innerHTML = `
 `;
 
 class ChatHeader extends HTMLElement {
-
-  #shadowRoot;
-
   constructor() {
     super();
-    this.#shadowRoot = this.attachShadow({mode: 'open'});
-    this.#shadowRoot.appendChild(template.content.cloneNode(true));
+    this.shadow = this.attachShadow({mode: 'open'});
+    this.shadow.appendChild(template.content.cloneNode(true));
 
     this.setWelcomeMessage(this.getAttribute('user-name'));
     this.handleNameChange();
@@ -42,12 +39,12 @@ class ChatHeader extends HTMLElement {
   }
 
   setWelcomeMessage(name) {
-    this.#shadowRoot.querySelector('h3')
+    this.shadow.querySelector('h3')
       .innerText = `Welcome ${name}! 👋`;
   }
 
   handleNameChange() {
-    this.#shadowRoot.querySelector('chat-button').addEventListener('click', () => {
+    this.shadow.querySelector('chat-button').addEventListener('click', () => {
       const newName = (prompt(
         "Please enter your shiny new name ✨",
         this.getAttribute('user-name')

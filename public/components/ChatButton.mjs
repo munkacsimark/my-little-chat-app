@@ -27,20 +27,17 @@ template.innerHTML = `
 `;
 
 class ChatButton extends HTMLElement {
-
-  #shadowRoot;
-
   constructor() {
     super();
-    this.#shadowRoot = this.attachShadow({mode: 'open'});
-    this.#shadowRoot.appendChild(template.content.cloneNode(true));
+    this.shadow = this.attachShadow({mode: 'open'});
+    this.shadow.appendChild(template.content.cloneNode(true));
 
     this.setType()
   }
 
   setType() {
-    if (this.getAttribute('type'))
-      this.#shadowRoot.querySelector('button').setAttribute('type', this.getAttribute('type'));
+    const type = this.getAttribute('type');
+    if (type) this.shadow.querySelector('button').setAttribute('type', type);
   }
 }
 

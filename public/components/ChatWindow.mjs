@@ -12,13 +12,10 @@ template.innerHTML = `
 `;
 
 class ChatWindow extends HTMLElement {
-
-  #shadowRoot;
-
   constructor() {
     super();
-    this.#shadowRoot = this.attachShadow({mode: 'open'});
-    this.#shadowRoot.appendChild(template.content.cloneNode(true));
+    this.shadow = this.attachShadow({mode: 'open'});
+    this.shadow.appendChild(template.content.cloneNode(true));
   }
 }
 

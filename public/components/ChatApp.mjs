@@ -31,75 +31,64 @@ template.innerHTML = `
       border-radius: 3px;
     }
   </style>
-  <div class="app-container"></div>
+  <div class="app-container">
+    <chat-header></chat-header>
+    <chat-window></chat-window>
+    <chat-footer></chat-footer>
+  </div>
 `;
 
 class ChatApp extends HTMLElement {
-
-  #shadowRoot;
-  #state = new State({
-    userName: 'guest'
-  });
-  #socket;
-  #displayWindow;
-
   constructor() {
     super();
 
-    this.#socket = new Socket('http://127.0.0.1:3001');
-    //this.#socket = new Socket('http://185.13.90.140:8081/');
+    this.socket = new Socket('http://127.0.0.1:3001');
+    //this.socket = new Socket('http://185.13.90.140:8081/');
 
-    this.#shadowRoot = this.attachShadow({mode: 'open'});
-    this.#shadowRoot.appendChild(template.content.cloneNode(true));
+    this.state = new State({ userName: 'guest' });
 
-    this.createHeader();
-    this.createWindow();
-    this.createFooter();
-
-    this.#socket.listenForMessages(this.handleReceivedMessages.bind(this));
+    this.shadow = this.attachShadow({mode: 'open'});
+    this.shadow.appendChild(template.content.cloneNode(true));
+    this.socket.listenForMessages(this.handleReceivedMessages.bind(this));
   }
 
-  createHeader() {
-    const element = document.createElement('chat-header');
-    element.setAttribute('user-name', this.#state.get('userName'));
-    element.addEventListener('changeName', this.handleNameChange.bind(this));
-    this.#shadowRoot.querySelector('.app-container').appendChild(element);
-  }
+  connectedCallback() {
+    const chatHeader = this.shadow.querySelector('chat-header');
+    chatHeader.setAttribute('user-name', this.state.get('userName'));
+    chatHeader.addEventListener('changeName', this.handleNameChange.bind(this));
 
-  createWindow() {
-    const element = document.createElement('chat-window');
-    this.#shadowRoot.querySelector('.app-container').appendChild(element);
-    this.#displayWindow = element;
-  }
-
-  createFooter() {
-    const element = document.createElement('chat-footer');
-    element.addEventListener('sendMessage', this.handleSendMessage.bind(this));
-    this.#shadowRoot.querySelector('.app-container').appendChild(element);
+    const chatFooter = this.shadow.querySelector('chat-footer');
+    chatFooter.addEventListener('sendMessage', this.handleSendMessage.bind(this));
   }
 
   handleNameChange(event) {
-    this.#state.setState('userName', event.detail);
-    this.#shadowRoot.querySelector('chat-header')
-      .setAttribute('user-name', this.#state.get('userName'));
+    this.state.setState('userName', event.detail);
+    this.shadow.querySelector('chat-header')
+      .setAttribute('user-name', this.state.get('userName'));
   }
 
   handleSendMessage(event) {
-    const message = new Message(event.detail, this.#state.get('userName'));
-    this.#socket.sendMessage(message.json);
+    const message = new Message(event.detail, this.state.get('userName'));
+    this.socket.sendMessage(message.json);
   }
 
   handleReceivedMessages(receivedMessage) {
     const message = new Message(receivedMessage.message, receivedMessage.user);
+    const chatWindow = this.shadow.querySelector('chat-window');
+    const chatElement = this.createChatElement(message);
+    chatWindow.appendChild(chatElement);
+    chatElement.scrollIntoView({behavior: "smooth", block: "end"});
+  }
+
+  createChatElement(message) {
     const element = document.createElement('chat-message');
-    if (this.#state.get('userName') === message.user)
+    if (this.state.get('userName') === message.user)
       element.setAttribute('own-message', true);
     if (message.user === 'server')
       element.setAttribute('server-message', true);
     element.setAttribute('user', message.user);
     element.setAttribute('text', message.message);
-    this.#displayWindow.appendChild(element);
-    element.scrollIntoView({behavior: "smooth", block: "end"});
+    return element;
   }
 }
 

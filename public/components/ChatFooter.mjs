@@ -23,29 +23,25 @@ template.innerHTML = `
 `;
 
 class ChatFooter extends HTMLElement {
-
-  #shadowRoot;
-
   constructor() {
     super();
-    this.#shadowRoot = this.attachShadow({mode: 'open'});
-    this.#shadowRoot.appendChild(template.content.cloneNode(true));
-
-    this.listenToMessageSend()
+    this.shadow = this.attachShadow({mode: 'open'});
+    this.shadow.appendChild(template.content.cloneNode(true));
+    this.listenToMessageSend();
   }
 
   listenToMessageSend() {
-    const input = this.#shadowRoot.querySelector('chat-input');
-    input.addEventListener('inputEnter', event => this.handleMessageSend(input));
-    this.#shadowRoot.querySelector('chat-button')
-      .addEventListener('click', event => this.handleMessageSend(input));
+    const input = this.shadow.querySelector('chat-input');
+    const button = this.shadow.querySelector('chat-button');
+    input.addEventListener('inputEnter', _ => this.handleMessageSend(input));
+    button.addEventListener('click', _ => this.handleMessageSend(input));
   }
 
   handleMessageSend(input) {
-    const value = input.getAttribute('data-value').trim().replace(/ +(?= )/g,'');
-    if (!value) return;
-    this.dispatchEvent(new CustomEvent('sendMessage', { detail: value }));
-    input.setAttribute('data-value', '');
+    const realInput = input.shadow.querySelector('input')
+    if (!realInput.value) return;
+    this.dispatchEvent(new CustomEvent('sendMessage', { detail: realInput.value }));
+    realInput.value = '';
   }
 }
 
