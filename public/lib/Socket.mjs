@@ -1,15 +1,23 @@
 class Socket {
-  constructor(socket) {
-    if (!socket) throw new ReferenceError('io is required.');
-    this.socket = socket;
-    this.listenForMessages();
+
+  #socket;
+
+  constructor(serverAddress) {
+    if (typeof io === 'undefined')
+      throw new ReferenceError('socket.io client is missing.');
+
+    this.#socket = io(serverAddress);
   }
 
-  listenForMessages = () => {
-    this.socket.on('chat message', message => {
-      console.log(message);
-    });
+  listenForMessages(callback) {
+    this.#socket.on('message', callback);
+  }
+
+  sendMessage(message) {
+    this.#socket.emit('message', message);
   }
 }
 
-export { Socket };
+export {
+  Socket,
+};

@@ -2,17 +2,13 @@
 <html>
   <head>
     <meta charset="utf8" />
-    <link rel="icon" href="./assets/favicon.ico" />
     <title>My Little Chat App</title>
+    <link rel="icon" href="./assets/favicon.ico" />
+    <link rel="stylesheet" href="./main.css" />
     <script src="./socket.io/socket.io.js"></script>
     <script type="module" src="./main.mjs"></script>
   </head>
   <body>
-    <h1>Hello World!</h1>
-    <textarea id="messages" readonly rows="20"></textarea>
-    <form id="form" action="">
-      <input id="m" autocomplete="off" />
-      <button>Send</button>
-    </form>
+    <chat-app></chat-app>
   </body>
 </html>
