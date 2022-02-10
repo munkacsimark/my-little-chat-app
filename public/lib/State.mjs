@@ -1,17 +1,13 @@
 class State {
-
   #state;
 
   constructor(data) {
     this.#state = data;
   }
 
-  setState = (key, value) =>
-    this.#state[key] = value;
+  setState = (key, value) => (this.#state[key] = value);
 
-  get = key => this.#state[key];
+  get = (key) => this.#state[key];
 }
 
-export {
-  State,
-}
+export { State };

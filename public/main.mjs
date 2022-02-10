@@ -1,4 +1,4 @@
-const initApp = () => import('./components/ChatApp.mjs');
+const initApp = () => import("./components/ChatApp.mjs");
 
 (() => {
   initApp();

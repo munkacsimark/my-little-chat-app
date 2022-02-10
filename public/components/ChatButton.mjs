@@ -1,4 +1,4 @@
-const template = document.createElement('template');
+const template = document.createElement("template");
 template.innerHTML = `
   <style>
     :host {
@@ -29,20 +29,18 @@ template.innerHTML = `
 class ChatButton extends HTMLElement {
   constructor() {
     super();
-    this.shadow = this.attachShadow({mode: 'open'});
+    this.shadow = this.attachShadow({ mode: "open" });
     this.shadow.appendChild(template.content.cloneNode(true));
 
-    this.setType()
+    this.setType();
   }
 
   setType() {
-    const type = this.getAttribute('type');
-    if (type) this.shadow.querySelector('button').setAttribute('type', type);
+    const type = this.getAttribute("type");
+    if (type) this.shadow.querySelector("button").setAttribute("type", type);
   }
 }
 
-customElements.define('chat-button', ChatButton);
+customElements.define("chat-button", ChatButton);
 
-export {
-  ChatButton,
-}
+export { ChatButton };

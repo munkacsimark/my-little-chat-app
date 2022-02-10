@@ -6,7 +6,8 @@
   --color-gray: #7b7b7b;
   --color-blue: #79b1da;
 }
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   border: 0;
@@ -21,6 +22,6 @@ body {
   align-items: center;
   min-height: 100vh;
   line-height: 1;
-  font-family: 'Helvetica', Arial, sans-serif;
+  font-family: "Helvetica", Arial, sans-serif;
   background-color: var(--color-black);
 }

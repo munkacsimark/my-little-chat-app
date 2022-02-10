@@ -1,5 +1,4 @@
 class Message {
-
   #message;
   #user;
 
@@ -22,10 +21,8 @@ class Message {
     return {
       message: this.#message,
       user: this.#user,
-    }
+    };
   }
 }
 
-export {
-  Message,
-}
+export { Message };

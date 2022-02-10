@@ -1,4 +1,4 @@
-const template = document.createElement('template');
+const template = document.createElement("template");
 template.innerHTML = `
   <style>
     :host {
@@ -51,7 +51,7 @@ template.innerHTML = `
 class ChatMessage extends HTMLElement {
   constructor() {
     super();
-    this.shadow = this.attachShadow({mode: 'open'});
+    this.shadow = this.attachShadow({ mode: "open" });
     this.shadow.appendChild(template.content.cloneNode(true));
   }
 
@@ -60,16 +60,15 @@ class ChatMessage extends HTMLElement {
   }
 
   getData() {
-    const messageElement = this.shadow.querySelector('.row');
-    if (this.getAttribute('own-message')) messageElement.classList.add('own');
-    if (this.getAttribute('server-message')) messageElement.classList.add('server');
-    this.shadow.querySelector('.user').innerText = this.getAttribute('user');
-    this.shadow.querySelector('.text').innerText = this.getAttribute('text');
+    const messageElement = this.shadow.querySelector(".row");
+    if (this.getAttribute("own-message")) messageElement.classList.add("own");
+    if (this.getAttribute("server-message"))
+      messageElement.classList.add("server");
+    this.shadow.querySelector(".user").innerText = this.getAttribute("user");
+    this.shadow.querySelector(".text").innerText = this.getAttribute("text");
   }
 }
 
-customElements.define('chat-message', ChatMessage);
+customElements.define("chat-message", ChatMessage);
 
-export {
-  ChatMessage,
-}
+export { ChatMessage };

@@ -9,6 +9,7 @@ Clone the repo and install npm dependencies. You will need two terminal instance
 ## Server
 
 It's only for development purposes, it can handle only the `message` event. It's running on `http://127.0.0.1:3001`.
+
 ```bash
 $ npm run server
 ```
@@ -16,6 +17,7 @@ $ npm run server
 ## Client
 
 It's a very simple http server only for serving static files of the client. It's running on `http://127.0.0.1:3000`.
+
 ```bash
 $ npm run client
 ```

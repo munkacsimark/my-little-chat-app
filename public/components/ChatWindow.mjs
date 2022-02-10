@@ -1,4 +1,4 @@
-const template = document.createElement('template');
+const template = document.createElement("template");
 template.innerHTML = `
   <style>
     :host {
@@ -14,13 +14,11 @@ template.innerHTML = `
 class ChatWindow extends HTMLElement {
   constructor() {
     super();
-    this.shadow = this.attachShadow({mode: 'open'});
+    this.shadow = this.attachShadow({ mode: "open" });
     this.shadow.appendChild(template.content.cloneNode(true));
   }
 }
 
-customElements.define('chat-window', ChatWindow);
+customElements.define("chat-window", ChatWindow);
 
-export {
-  ChatWindow,
-}
+export { ChatWindow };

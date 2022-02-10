@@ -1,4 +1,4 @@
-const template = document.createElement('template');
+const template = document.createElement("template");
 template.innerHTML = `
   <style>
     :host {
@@ -27,10 +27,10 @@ template.innerHTML = `
 class ChatHeader extends HTMLElement {
   constructor() {
     super();
-    this.shadow = this.attachShadow({mode: 'open'});
+    this.shadow = this.attachShadow({ mode: "open" });
     this.shadow.appendChild(template.content.cloneNode(true));
 
-    this.setWelcomeMessage(this.getAttribute('user-name'));
+    this.setWelcomeMessage(this.getAttribute("user-name"));
     this.handleNameChange();
   }
 
@@ -39,28 +39,29 @@ class ChatHeader extends HTMLElement {
   }
 
   setWelcomeMessage(name) {
-    this.shadow.querySelector('h3')
-      .innerText = `Welcome ${name}! 👋`;
+    this.shadow.querySelector("h3").innerText = `Welcome ${name}! 👋`;
   }
 
   handleNameChange() {
-    this.shadow.querySelector('chat-button').addEventListener('click', () => {
-      const newName = (prompt(
-        "Please enter your shiny new name ✨",
-        this.getAttribute('user-name')
-      ) || '').trim().replace(/ +(?= )/g,'');
-      if (!newName || newName === 'server') return;
-      this.dispatchEvent(new CustomEvent('changeName', { detail: newName }));
+    this.shadow.querySelector("chat-button").addEventListener("click", () => {
+      const newName = (
+        prompt(
+          "Please enter your shiny new name ✨",
+          this.getAttribute("user-name")
+        ) || ""
+      )
+        .trim()
+        .replace(/ +(?= )/g, "");
+      if (!newName || newName === "server") return;
+      this.dispatchEvent(new CustomEvent("changeName", { detail: newName }));
     });
   }
 
   static get observedAttributes() {
-    return ['user-name'];
+    return ["user-name"];
   }
 }
 
-customElements.define('chat-header', ChatHeader);
+customElements.define("chat-header", ChatHeader);
 
-export {
-  ChatHeader,
-}
+export { ChatHeader };
