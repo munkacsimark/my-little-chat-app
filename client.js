@@ -2,13 +2,13 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 const logger = require("./lib/Logger");
+const { CLIENT_PORT } = require("./config");
 
-const port = 3000;
 const baseDir = "public";
 
 const getFilePath = (requestedUrl) => {
   if (requestedUrl === "/socket.io/socket.io.js")
-    return (filePath = "./node_modules/socket.io-client/dist/socket.io.js");
+    return (filePath = "./node_modules/socket.io/client-dist/socket.io.js");
   else if (requestedUrl === "/") return (filePath = `./${baseDir}/index.html`);
   return `./${baseDir}/${requestedUrl}`;
 };
@@ -58,6 +58,6 @@ http
       );
     });
   })
-  .listen(port);
+  .listen(CLIENT_PORT);
 
-console.log(`Server running at http://127.0.0.1:${port}`);
+console.log(`Server running at http://127.0.0.1:${CLIENT_PORT}`);

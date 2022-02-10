@@ -1,9 +1,14 @@
 const http = require("http");
 const logger = require("./lib/Logger");
+const { SERVER_PORT, CLIENT_PORT } = require("./config");
 
-const port = 3001;
-const server = http.createServer().listen(port);
-const io = require("socket.io")(server);
+const server = http.createServer().listen(SERVER_PORT);
+const io = require("socket.io")(server, {
+  cors: {
+    origin: `http://127.0.0.1:${CLIENT_PORT}`,
+    credentials: true,
+  },
+});
 
 io.on("connection", (socket) => {
   logger.log("A user connected", logger.color.GREEN);
@@ -18,4 +23,4 @@ io.on("connection", (socket) => {
   });
 });
 
-console.log(`Server running at http://127.0.0.1:${port}`);
+console.log(`Server running at http://127.0.0.1:${SERVER_PORT}`);
